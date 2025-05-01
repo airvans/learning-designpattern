@@ -38,7 +38,6 @@ export function Layout(){
         setvalue('')
         present.current = ''
         numbers.current = []
-        setresult(0)
     }
 
     function getaresult(){
@@ -72,35 +71,30 @@ export function Layout(){
     
 
     return(<>
-    <div className="container">
-        <div>
-         <input type="text" value={value} className="textinput" readOnly/> <Button number={'cls'} sethandler={cleardisplay}/>
-        </div>
-        <div>
-        <Button number={1} sethandler={addtoinput}/>
-        <Button number={2} sethandler={addtoinput}/>
-        <Button number={3} sethandler={addtoinput}/>
-        <Button number={'/'} sethandler={specialinput}/>
-        </div>
-        <div>
-        <Button number={4} sethandler={addtoinput}/>
-        <Button number={5} sethandler={addtoinput}/>
-        <Button number={6} sethandler={addtoinput}/>
-        <Button number={'*'} sethandler={specialinput}/>
-        </div>
-        <div>
-        <Button number={7} sethandler={addtoinput}/>
-        <Button number={8} sethandler={addtoinput}/>
-        <Button number={9} sethandler={addtoinput}/>
-        <Button number={'-'} sethandler={specialinput}/>
-        </div>
-        <div>
-        <Button number={0} sethandler={addtoinput}/>
-        <Button number={'.'}sethandler={specialinput}/>
-        <Button number={'='}sethandler={getaresult}/>
-        <Button number={'+'}sethandler={specialinput}/>
-        </div>
-    </div>
+   <div className="container">
+  <div className="display-row">
+    <input type="text" value={value} className="textinput" readOnly />
+    <Button number={'cls'} sethandler={cleardisplay} />
+  </div>
+  <div className="grid">
+    {[1, 2, 3, '/',
+      4, 5, 6, '*',
+      7, 8, 9, '-',
+      0, '.', '=', '+'
+    ].map((item, idx) => (
+      <Button
+        key={idx}
+        number={item}
+        sethandler={['+', '-', '*', '/', '.', '='].includes(item)
+          ? item === '='
+            ? getaresult
+            : specialinput
+          : addtoinput}
+      />
+    ))}
+  </div>
+</div>
+
     </>)
 
 }
